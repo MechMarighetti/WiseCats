@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import getCat from '../services/getCat';
+import getQuote from '../services/getQuote';
 
 const ViewPractice = () => {
-
-    const [quote, setQuote] = useState(
+    const [error, setError] = useState(null)
+    const [loading, setLoading] = useState(false)
+    /* const [quote, setQuote] = useState(
         {   id:'',
             content:"",
             author:"",
             tags:[]
         }
-    )
-    const [error, setError] = useState(null)
-    const [loading, setLoading] = useState(false)
+    )     */    
     const [cat, setCat]=useState(
         {
             id:'',
@@ -20,7 +21,7 @@ const ViewPractice = () => {
         }
     )
 
-    const fetchQuote = async () => {
+    /* const fetchQuote = async () => {
         setError(null)
         try {
             setLoading(true);
@@ -42,9 +43,9 @@ const ViewPractice = () => {
         } finally {
             setLoading(false);
         }
-    }
+    } */
     
-    const fetchCat = async () => {
+   /*  const fetchCat = async () => {
         setError(null)
         try {
             setLoading(true)
@@ -65,33 +66,38 @@ const ViewPractice = () => {
         } finally {
             setLoading(false);
         }
-    }
+    } */
 
     
-useEffect(()=>{
-
-fetchQuote();
-fetchCat();
-}, [])
-
-const handleCats = () => {
-    fetchQuote();
-    fetchCat();
-}
-
+    useEffect(()=>{
+        /* const wisdom = getQuote(); */
+   /*  const kitten = async() =>{
+       await getCat();
+    } */
+      /*   getQuote();
+        setQuote(wisdom) */
+    }, [])
+    
+    /* const handleCats = () => {
+        getQuote();
+        getCat();
+    } */
+    const kitten = getCat();
+    console.log(kitten.url)
+    setCat(kitten)
   return (
     <div>
          {loading && <h1>Cargando data</h1>}
       {error && <h1>{error}</h1>}
         <img src={cat.url} alt="Gatito" width={cat.width} height={cat.heigth}/>
-        <h2>{quote.content}</h2>
-        <p>{quote.author}</p>
-        {quote.tags.map((e, index) => (
+        {/* <h2>{quote.content}</h2>
+        <p>{quote.author}</p> */}
+       {/*  {quote.tags.map((e, index) => (
             <a key={index} href="#">{e}
             </a>
         )
-        )}
-        <button onClick={handleCats}>+</button>
+        )} */}
+      {/*   <button onClick={handleCats}>+</button> */}
     </div>
   )
 }
