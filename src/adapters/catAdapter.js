@@ -1,4 +1,4 @@
-export const catAdapter = (data) => {
+export default function catAdapter (data) {
     return {
         id:data[0].id,
         url:data[0].url,
