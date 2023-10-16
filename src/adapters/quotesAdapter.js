@@ -1,8 +1,10 @@
-export default function quotesAdapter (quote) {
+const quotesAdapter = (quote) => {
     return({
     id:quote._id,
     content:quote.content,
     author:quote.author,
     tags: quote.tags, 
-    })
-}
+    });
+};
+
+export { quotesAdapter };

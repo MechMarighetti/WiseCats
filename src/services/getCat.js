@@ -1,8 +1,7 @@
-export default async function getCat () {
-    const endpoint = 'https://api.thecatapi.com/v1/images/search';
-    const response = await fetch(endpoint)
-    if(!response.ok){ throw new Error('aca no hay un gato, hay un error')}
-    console.log('response', response);
-    const data = await response.json();
-    return data
-}
+import axios from 'axios';
+import { catAdapter } from '../adapters/catAdapter';
+
+export const getCat = async () => {
+    const response = await axios.get('https://api.thecatapi.com/v1/images/search');
+    return catAdapter(response.data);
+};
