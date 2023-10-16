@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { getQuote } from '../services/getQuote';
-import { getCat } from '../services/getCat';
+import { getApiData } from '../services/getApiData';
+import { catAdapter } from '../adapters/catAdapter';
+import { quotesAdapter } from '../adapters/quotesAdapter';
+
+const API_1 = 'https://api.thecatapi.com/v1/images/search'; // Random image cats
+const API_2 = 'https://api.quotable.io/random'; // Random quotes
 
 const useFetch = () => {
     const [quote, setQuote] = useState({   
@@ -20,14 +24,13 @@ const useFetch = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    const fetchQuote = async () => {
+    const fetchCat = async () => {
         setError(null);
-        setCat(null);
-        setQuote(null);
         try {
-            setLoading(true);
-            const quotes = await getQuote();
-            setQuote(quotes);
+            setLoading(true)
+            const catData = await getApiData(API_1);
+            const catAdapted = catAdapter(catData);
+            setCat(catAdapted);
         } catch (error) {
             setError(error)
         } finally {
@@ -35,14 +38,13 @@ const useFetch = () => {
         }
     };
 
-    const fetchCat = async () => {
-        setError(null)
-        setCat(null);
-        setQuote(null);
+    const fetchQuote = async () => {
+        setError(null);
         try {
-            setLoading(true)
-            const cats = await getCat();
-            setCat(cats);
+            setLoading(true);
+            const quoteData = await getApiData(API_2);
+            const quoteAdapted = quotesAdapter(quoteData);
+            setQuote(quoteAdapted);
         } catch (error) {
             setError(error)
         } finally {
@@ -51,8 +53,8 @@ const useFetch = () => {
     };
 
     useEffect(() => {
-        fetchQuote();
         fetchCat();
+        fetchQuote();
     }, []);
 
     return {
@@ -60,8 +62,8 @@ const useFetch = () => {
         cat,
         error,
         loading,
-        fetchQuote,
-        fetchCat
+        fetchCat,
+        fetchQuote
     }
 };
 
